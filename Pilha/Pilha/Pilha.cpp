@@ -14,6 +14,7 @@ void menu();
 void inicializar();
 void pop();
 void push();
+void mostrarPilha();
 //--------------------------
 
 
@@ -25,14 +26,15 @@ int main()
 void menu()
 {
 	int op = 0;
-	while (op != 4) {
+	while (op != 5) {
 		system("cls"); // somente no windows
 		cout << "Menu Pilha";
 		cout << endl << endl;
 		cout << "1 - Inicializar Pilha \n";
 		cout << "2 - Inserir elemento (Push) \n";
 		cout << "3 - Remover elementos (Pop) \n";
-		cout << "4 - Sair \n";
+		cout << "4 - Mostrar os elementos da Pilha \n";
+		cout << "5 - Sair \n";
 
 
 		cout << "Opcao: ";
@@ -46,7 +48,9 @@ void menu()
 			break;
 		case 3: pop();
 			break;
-		case 4:
+		case 4: mostrarPilha();
+			break;
+        case 5:
 			return;
 		default:
 			break;
@@ -56,11 +60,8 @@ void menu()
 	}
 }
 
-void inicializar()
-{
+void inicializar(){
 
-	// se a lista já possuir elementos
-	// libera a memoria ocupada
 	NO* aux = topo;
 	while (aux != NULL) {
 		NO* paraExcluir = aux;
@@ -74,26 +75,53 @@ void inicializar()
 }
 
 
-void push()
-{
-	// aloca memoria dinamicamente para o novo elemento
+void push(){
+
 	NO* novo = (NO*)malloc(sizeof(NO));
-	if (novo == NULL)
-	{
+	if (novo == NULL){
+	    cout << "Erro: Falha ao alocar memoria para o novo elemento.";
 		return;
 	}
 
 	cout << "Digite o elemento: ";
 	cin >> novo->valor;
-	novo->prox = NULL;
+	novo->prox = topo;
+	topo = novo;
+}
 
+void pop(){
+
+    NO* aux = topo;
+
+    if(topo == NULL){
+        cout << "Pilha vazia! Nao exitem elementos para remover." << endl;
+        return;
+    }
+
+    topo = topo->prox;
+    cout << "O elemento removido foi: " << aux->valor << endl;
+    free(aux);
 
 }
 
-void pop()
-{
+void mostrarPilha() {
 
-	
+    NO* aux = topo; // ponteiro temporario para percorrer a pilha
+
+    if(topo == NULL){
+        cout << "Pilha vazia!";
+        return;
+    }
+
+    cout << "Elementos da Pilha: " << endl;
+    while (aux != NULL){
+        cout << aux-> valor << endl;
+        aux = aux->prox;
+    }
 
 }
+
+
+
+
 
